@@ -9,6 +9,13 @@
 
 @interface Game ()
 
+@property (nonatomic, strong) NSMutableArray * boids;
+@property (nonatomic, strong) SPImage * background;
+@property (nonatomic, assign) CGFloat totalTime;
+@property (nonatomic, assign) CGFloat creationTimeOfLastBoid;
+@property (nonatomic, assign) CGFloat boidCreationInterval;
+@property (nonatomic, assign) NSUInteger maxBoids;
+
 - (void)setup;
 - (void)onImageTouched:(SPTouchEvent *)event;
 - (void)onResize:(SPResizeEvent *)event;
@@ -63,22 +70,22 @@
     _contents = [SPSprite sprite];
     [self addChild:_contents];
 
-    SPImage *background = [[SPImage alloc] initWithContentsOfFile:@"background.jpg"];
-    [_contents addChild:background];
+    _background = [[SPImage alloc] initWithContentsOfFile:@"swarmBackground.jpg"];
+    [_contents addChild:_background];
     
     NSString *text = @"To find out how to create your own game out of this scaffold, "
                      @"have a look at the 'First Steps' section of the Sparrow website!";
     
     SPTextField *textField = [[SPTextField alloc] initWithWidth:280 height:80 text:text];
-    textField.x = (background.width - textField.width) / 2;
-    textField.y = (background.height / 2) - 135;
+    textField.x = (_background.width - textField.width) / 2;
+    textField.y = (_background.height / 2) - 135;
     [_contents addChild:textField];
 
     SPImage *image = [[SPImage alloc] initWithTexture:[Media atlasTexture:@"sparrow"]];
     image.pivotX = (int)image.width  / 2;
     image.pivotY = (int)image.height / 2;
-    image.x = background.width  / 2;
-    image.y = background.height / 2 + 40;
+    image.x = _background.width  / 2;
+    image.y = _background.height / 2 + 40;
     [_contents addChild:image];
     
     [self updateLocations];
@@ -94,6 +101,9 @@
     tween.reverse = YES;
     [Sparrow.juggler addObject:tween];
     
+    _boids = [NSMutableArray new];
+    _boidCreationInterval = 5.0;
+    _maxBoids = 30;
 
     // The controller autorotates the game to all supported device orientations. 
     // Choose the orienations you want to support in the Xcode Target Settings ("Summary"-tab).
@@ -114,6 +124,9 @@
     //   * iPhone/iPad -> Universal App  
     // 
     // Sparrow's minimum deployment target is iOS 5.
+    
+    // Add an event listener for an update of frame
+    [self addEventListener:@selector(onEnterFrame:) atObject:self forType:SP_EVENT_TYPE_ENTER_FRAME];
 }
 
 - (void)updateLocations
@@ -137,6 +150,40 @@
           event.isPortrait ? @"portrait" : @"landscape");
     
     [self updateLocations];
+}
+
+- (void)onEnterFrame:(SPEnterFrameEvent *)event
+{
+    float passedTime = (float)event.passedTime;
+    float fallingSpeed = 100 + 5*10;
+    float fallingDistance = fallingSpeed*passedTime;
+    
+    for (SPImage *boid in [self.boids copy])
+    {
+        //move the boid
+        boid.y += fallingDistance;
+        boid.rotation += passedTime;
+        
+        //check for boid moving off screen
+        BOOL didMoveOffScreen = ![_background.bounds intersectsRectangle:boid.bounds];
+        if(didMoveOffScreen)
+        {
+            // Remove the boid
+            [self removeChild:boid];
+            [self.boids removeObject:boid];
+        }
+    }
+    
+    if ([self.boids count] < self.maxBoids) {
+        SPImage *boid = [SPImage imageWithContentsOfFile:@"bird.png"];
+        boid.x = 1024.0 * [SPUtils randomFloat];
+        boid.y = 0.0 - (100 * [SPUtils randomFloat]);
+        if (boid) {
+            [self addChild:boid];
+            [self.boids addObject:boid];
+            _creationTimeOfLastBoid = _totalTime;
+        }
+    }
 }
 
 @end
