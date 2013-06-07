@@ -12,6 +12,9 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
+		D1B562AD176258D60020B21D /* Creature.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B562AC176258D60020B21D /* Creature.m */; };
+		D1B562B1176259160020B21D /* Species.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B562B0176259160020B21D /* Species.m */; };
+		D1B562B417625C8C0020B21D /* CreatureFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B562B317625C8C0020B21D /* CreatureFactory.m */; };
 		D1EC2F9B173DB04B00548DB9 /* swarmBackground.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D1EC2F9A173DB04B00548DB9 /* swarmBackground.jpg */; };
 		D1EC2F9E173DB57000548DB9 /* bird.png in Resources */ = {isa = PBXBuildFile; fileRef = D1EC2F9D173DB57000548DB9 /* bird.png */; };
 		DE0C71011624177000357F6E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = DE0C71001624177000357F6E /* Default.png */; };
@@ -76,6 +79,12 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* App-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "App-Prefix.pch"; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* App-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "App-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+		D1B562AB176258D60020B21D /* Creature.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Creature.h; sourceTree = "<group>"; };
+		D1B562AC176258D60020B21D /* Creature.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Creature.m; sourceTree = "<group>"; };
+		D1B562AF176259160020B21D /* Species.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Species.h; sourceTree = "<group>"; };
+		D1B562B0176259160020B21D /* Species.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Species.m; sourceTree = "<group>"; };
+		D1B562B217625C8C0020B21D /* CreatureFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreatureFactory.h; sourceTree = "<group>"; };
+		D1B562B317625C8C0020B21D /* CreatureFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreatureFactory.m; sourceTree = "<group>"; };
 		D1EC2F9A173DB04B00548DB9 /* swarmBackground.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = swarmBackground.jpg; sourceTree = "<group>"; };
 		D1EC2F9D173DB57000548DB9 /* bird.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bird.png; sourceTree = "<group>"; };
 		DE0C71001624177000357F6E /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
@@ -198,6 +207,19 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		D123B2F017404169004E61E6 /* Swarm */ = {
+			isa = PBXGroup;
+			children = (
+				D1B562AB176258D60020B21D /* Creature.h */,
+				D1B562AC176258D60020B21D /* Creature.m */,
+				D1B562AF176259160020B21D /* Species.h */,
+				D1B562B0176259160020B21D /* Species.m */,
+				D1B562B217625C8C0020B21D /* CreatureFactory.h */,
+				D1B562B317625C8C0020B21D /* CreatureFactory.m */,
+			);
+			name = Swarm;
+			sourceTree = "<group>";
+		};
 		DE0C71121624180300357F6E /* system */ = {
 			isa = PBXGroup;
 			children = (
@@ -226,6 +248,7 @@
 		DE4F80D714E153EA00655D44 /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				D123B2F017404169004E61E6 /* Swarm */,
 				DE4A3DE310FFB2AF00FDA492 /* Game.h */,
 				DE4A3DE410FFB2AF00FDA492 /* Game.m */,
 				DE4F80D414E153E600655D44 /* Media.h */,
@@ -383,6 +406,9 @@
 				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
 				DE4A3DE510FFB2AF00FDA492 /* Game.m in Sources */,
 				DE4F80D614E153E600655D44 /* Media.m in Sources */,
+				D1B562AD176258D60020B21D /* Creature.m in Sources */,
+				D1B562B1176259160020B21D /* Species.m in Sources */,
+				D1B562B417625C8C0020B21D /* CreatureFactory.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -3,18 +3,16 @@
 //  AppScaffold
 //
 
-#import "Game.h" 
+#import "Game.h"
+#import "CreatureFactory.h"
 
 // --- private interface ---------------------------------------------------------------------------
 
 @interface Game ()
 
-@property (nonatomic, strong) NSMutableArray * boids;
 @property (nonatomic, strong) SPImage * background;
 @property (nonatomic, assign) CGFloat totalTime;
-@property (nonatomic, assign) CGFloat creationTimeOfLastBoid;
-@property (nonatomic, assign) CGFloat boidCreationInterval;
-@property (nonatomic, assign) NSUInteger maxBoids;
+@property (nonatomic, strong) CreatureFactory * creatureFactory;
 
 - (void)setup;
 - (void)onImageTouched:(SPTouchEvent *)event;
@@ -53,7 +51,6 @@
     
     [SPAudioEngine start];  // starts up the sound engine
     
-    
     // The Application contains a very handy "Media" class which loads your texture atlas
     // and all available sound files automatically. Extend this class as you need it --
     // that way, you will be able to access your textures and sounds throughout your 
@@ -73,37 +70,38 @@
     _background = [[SPImage alloc] initWithContentsOfFile:@"swarmBackground.jpg"];
     [_contents addChild:_background];
     
-    NSString *text = @"To find out how to create your own game out of this scaffold, "
-                     @"have a look at the 'First Steps' section of the Sparrow website!";
+    // Create our creatures
+    _creatureFactory = [CreatureFactory sharedCreatureFactory];
+    [_creatureFactory createLife];
     
-    SPTextField *textField = [[SPTextField alloc] initWithWidth:280 height:80 text:text];
-    textField.x = (_background.width - textField.width) / 2;
-    textField.y = (_background.height / 2) - 135;
-    [_contents addChild:textField];
+    
+//    NSString *text = @"To find out how to create your own game out of this scaffold, "
+//                     @"have a look at the 'First Steps' section of the Sparrow website!";
+    
+//    SPTextField *textField = [[SPTextField alloc] initWithWidth:280 height:80 text:text];
+//    textField.x = (_background.width - textField.width) / 2;
+//    textField.y = (_background.height / 2) - 135;
+//    [_contents addChild:textField];
 
-    SPImage *image = [[SPImage alloc] initWithTexture:[Media atlasTexture:@"sparrow"]];
-    image.pivotX = (int)image.width  / 2;
-    image.pivotY = (int)image.height / 2;
-    image.x = _background.width  / 2;
-    image.y = _background.height / 2 + 40;
-    [_contents addChild:image];
+//    SPImage *image = [[SPImage alloc] initWithTexture:[Media atlasTexture:@"sparrow"]];
+//    image.pivotX = (int)image.width  / 2;
+//    image.pivotY = (int)image.height / 2;
+//    image.x = _background.width  / 2;
+//    image.y = _background.height / 2 + 40;
+//    [_contents addChild:image];
     
     [self updateLocations];
     
     // play a sound when the image is touched
-    [image addEventListener:@selector(onImageTouched:) atObject:self forType:SP_EVENT_TYPE_TOUCH];
-    
-    // and animate it a little
-    SPTween *tween = [SPTween tweenWithTarget:image time:1.5 transition:SP_TRANSITION_EASE_IN_OUT];
-    [tween animateProperty:@"y" targetValue:image.y + 30];
-    [tween animateProperty:@"rotation" targetValue:0.1];
-    tween.repeatCount = 0; // repeat indefinitely
-    tween.reverse = YES;
-    [Sparrow.juggler addObject:tween];
-    
-    _boids = [NSMutableArray new];
-    _boidCreationInterval = 5.0;
-    _maxBoids = 30;
+//    [image addEventListener:@selector(onImageTouched:) atObject:self forType:SP_EVENT_TYPE_TOUCH];
+//    
+//    // and animate it a little
+//    SPTween *tween = [SPTween tweenWithTarget:image time:1.5 transition:SP_TRANSITION_EASE_IN_OUT];
+//    [tween animateProperty:@"y" targetValue:image.y + 30];
+//    [tween animateProperty:@"rotation" targetValue:0.1];
+//    tween.repeatCount = 0; // repeat indefinitely
+//    tween.reverse = YES;
+//    [Sparrow.juggler addObject:tween];
 
     // The controller autorotates the game to all supported device orientations. 
     // Choose the orienations you want to support in the Xcode Target Settings ("Summary"-tab).
@@ -136,6 +134,12 @@
     
     _contents.x = (int) (gameWidth  - _contents.width)  / 2;
     _contents.y = (int) (gameHeight - _contents.height) / 2;
+    
+    for (Creature * creature in [_creatureFactory creatures]) {
+        creature.x = gameWidth * [SPUtils randomFloat];
+        creature.y = gameHeight * [SPUtils randomFloat];
+        [self addChild:creature];
+    }
 }
 
 - (void)onImageTouched:(SPTouchEvent *)event
@@ -155,35 +159,7 @@
 - (void)onEnterFrame:(SPEnterFrameEvent *)event
 {
     float passedTime = (float)event.passedTime;
-    float fallingSpeed = 100 + 5*10;
-    float fallingDistance = fallingSpeed*passedTime;
-    
-    for (SPImage *boid in [self.boids copy])
-    {
-        //move the boid
-        boid.y += fallingDistance;
-        boid.rotation += passedTime;
-        
-        //check for boid moving off screen
-        BOOL didMoveOffScreen = ![_background.bounds intersectsRectangle:boid.bounds];
-        if(didMoveOffScreen)
-        {
-            // Remove the boid
-            [self removeChild:boid];
-            [self.boids removeObject:boid];
-        }
-    }
-    
-    if ([self.boids count] < self.maxBoids) {
-        SPImage *boid = [SPImage imageWithContentsOfFile:@"bird.png"];
-        boid.x = 1024.0 * [SPUtils randomFloat];
-        boid.y = 0.0 - (100 * [SPUtils randomFloat]);
-        if (boid) {
-            [self addChild:boid];
-            [self.boids addObject:boid];
-            _creationTimeOfLastBoid = _totalTime;
-        }
-    }
+    [_creatureFactory update:passedTime];
 }
 
 @end
