@@ -9,7 +9,10 @@
 #import "CreatureFactory.h"
 
 #define kTotalCreatures 50
-#define kKnowledgeTimeInterval 1
+#define kKnowledgeTimeInterval 0.2
+
+// Blocks
+typedef void (^ CreatureBlock)(id, int);
 
 @interface CreatureFactory ()
 
@@ -24,7 +27,8 @@
     static CreatureFactory *sharedCreatureFactory = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sharedCreatureFactory = [self new];
+        if (!sharedCreatureFactory)
+            sharedCreatureFactory = [self new];
     });
     return sharedCreatureFactory;
 }
@@ -35,6 +39,9 @@
     
     for (int i = 0; i < kTotalCreatures; i++) {
         Creature * creature = [Creature imageWithContentsOfFile:@"bird.png"];
+        creature.maxSpeed = 50.0;
+        creature.name = [NSString stringWithFormat:@"Creature %i", i];
+        creature.currentSpeed = creature.maxSpeed * [SPUtils randomFloat];
         [creatures addObject:creature];
     }
     
@@ -46,34 +53,55 @@
     NSTimeInterval currentTime = [NSDate timeIntervalSinceReferenceDate];
     
     if (_lastKnowledgeUpdate + kKnowledgeTimeInterval < currentTime) {
-        // Knowledge updates are expensive so put them on a background thread
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,
-                                                 (unsigned long)NULL), ^(void) {
-            [self updateKnowledge];
-        });
+        
+        // TODO: This should be done asynchronously
+        [self updateKnowledge];
+        
         _lastKnowledgeUpdate = currentTime;
     }
     [self updateLocations];
 }
 
 - (void)updateLocations {
-    float fallingSpeed = 100;
-    float fallingDistance = fallingSpeed*_passedTime;
     
     for (Creature *creature in self.creatures)
     {
-        // Get the creatures in the FOV
+        NSNumber * averageSpeed;
+        if ([creature.neighbours count]) {
+            averageSpeed = [creature valueForKeyPath:@"neighbours.@avg.currentSpeed"];
+            //move the creature
+            creature.y += averageSpeed.floatValue * _passedTime;
+        }
+        else {
+            creature.y += creature.currentSpeed;
+        }
         
-        
-        //move the creature
-        creature.y += fallingDistance;
-        creature.rotation += _passedTime;
+//        creature.rotation += _passedTime;
     }
 }
 
 - (void)updateKnowledge {
-    // This can be done asynchronously
-    NSLog(@"Updating knowledge");
+    for (Creature *creature in self.creatures)
+    {
+        NSMutableArray * neightbours = [NSMutableArray array];
+        for (Creature *neighbour in self.creatures)
+        {
+            // Skip ourself
+            if ([creature isEqual:neighbour]) continue;
+            
+            // Get the creatures in the FOV
+            SPPoint * creaturePoint = [SPPoint pointWithX:creature.x y:creature.y];
+            SPPoint * neighbourPoint = [SPPoint pointWithX:neighbour.x y:neighbour.y];
+            float distanceToNeighbour = [SPPoint distanceFromPoint:creaturePoint toPoint:neighbourPoint];
+            if (distanceToNeighbour < 30) {
+                [neightbours addObject:neighbour];
+            }
+        }
+        
+        creature.neighbours = [neightbours copy];
+        
+        NSLog(@"%@ has %i neighbours", creature.name, [creature.neighbours count]);
+    }
 }
 
 @end
