@@ -1,0 +1,2 @@
+platform :ios, '6.0'
+pod 'Sparrow-Framework', '~> 2.0'

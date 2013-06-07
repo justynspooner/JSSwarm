@@ -12,9 +12,11 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
+		C00DF82EC6A249D0930C2D81 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E6B36523C7C4C9491F73E67 /* libPods.a */; };
 		D1B562AD176258D60020B21D /* Creature.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B562AC176258D60020B21D /* Creature.m */; };
 		D1B562B1176259160020B21D /* Species.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B562B0176259160020B21D /* Species.m */; };
 		D1B562B417625C8C0020B21D /* CreatureFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B562B317625C8C0020B21D /* CreatureFactory.m */; };
+		D1B562B61762A14E0020B21D /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = D1B562B51762A14E0020B21D /* Podfile */; };
 		D1EC2F9B173DB04B00548DB9 /* swarmBackground.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D1EC2F9A173DB04B00548DB9 /* swarmBackground.jpg */; };
 		D1EC2F9E173DB57000548DB9 /* bird.png in Resources */ = {isa = PBXBuildFile; fileRef = D1EC2F9D173DB57000548DB9 /* bird.png */; };
 		DE0C71011624177000357F6E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = DE0C71001624177000357F6E /* Default.png */; };
@@ -33,7 +35,6 @@
 		DE3F097811B7BABD009D4DB0 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE3F097711B7BABD009D4DB0 /* OpenAL.framework */; };
 		DE4A3D7A10FFB08200FDA492 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE4A3D7910FFB08200FDA492 /* OpenGLES.framework */; };
 		DE4A3D7F10FFB08B00FDA492 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE4A3D7E10FFB08B00FDA492 /* QuartzCore.framework */; };
-		DE4A3DB910FFB0FE00FDA492 /* libSparrow.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DE4A3DB010FFB0DB00FDA492 /* libSparrow.a */; };
 		DE4A3DE510FFB2AF00FDA492 /* Game.m in Sources */ = {isa = PBXBuildFile; fileRef = DE4A3DE410FFB2AF00FDA492 /* Game.m */; };
 		DE4F80D614E153E600655D44 /* Media.m in Sources */ = {isa = PBXBuildFile; fileRef = DE4F80D514E153E600655D44 /* Media.m */; };
 		DE4F80E814E1541400655D44 /* sound.caf in Resources */ = {isa = PBXBuildFile; fileRef = DE4F80DB14E1541400655D44 /* sound.caf */; };
@@ -45,30 +46,6 @@
 		DEAAF3DF16BC114D004EB9D5 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEAAF3DE16BC114D004EB9D5 /* GLKit.framework */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		DE4A3DAF10FFB0DB00FDA492 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = DE4A3DA210FFB0D400FDA492 /* Sparrow.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = DEFE4BC2101B317600E22471;
-			remoteInfo = Sparrow;
-		};
-		DE4A3DB110FFB0DB00FDA492 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = DE4A3DA210FFB0D400FDA492 /* Sparrow.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = DEEA9335101E32A30071DD21;
-			remoteInfo = UnitTests;
-		};
-		DE4A3DB710FFB0F500FDA492 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = DE4A3DA210FFB0D400FDA492 /* Sparrow.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = DEFE4BC1101B317600E22471;
-			remoteInfo = Sparrow;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -77,7 +54,9 @@
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		2E6B36523C7C4C9491F73E67 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		32CA4F630368D1EE00C91783 /* App-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "App-Prefix.pch"; sourceTree = "<group>"; };
+		6F698761F66D491E8F35EC12 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		8D1107310486CEB800E47090 /* App-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "App-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		D1B562AB176258D60020B21D /* Creature.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Creature.h; sourceTree = "<group>"; };
 		D1B562AC176258D60020B21D /* Creature.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Creature.m; sourceTree = "<group>"; };
@@ -85,6 +64,7 @@
 		D1B562B0176259160020B21D /* Species.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Species.m; sourceTree = "<group>"; };
 		D1B562B217625C8C0020B21D /* CreatureFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreatureFactory.h; sourceTree = "<group>"; };
 		D1B562B317625C8C0020B21D /* CreatureFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreatureFactory.m; sourceTree = "<group>"; };
+		D1B562B51762A14E0020B21D /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
 		D1EC2F9A173DB04B00548DB9 /* swarmBackground.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = swarmBackground.jpg; sourceTree = "<group>"; };
 		D1EC2F9D173DB57000548DB9 /* bird.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bird.png; sourceTree = "<group>"; };
 		DE0C71001624177000357F6E /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
@@ -103,7 +83,6 @@
 		DE3F097711B7BABD009D4DB0 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		DE4A3D7910FFB08200FDA492 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		DE4A3D7E10FFB08B00FDA492 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		DE4A3DA210FFB0D400FDA492 /* Sparrow.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = Sparrow.xcodeproj; sourceTree = SPARROW_SRC; };
 		DE4A3DE310FFB2AF00FDA492 /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
 		DE4A3DE410FFB2AF00FDA492 /* Game.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Game.m; sourceTree = "<group>"; };
 		DE4F80D414E153E600655D44 /* Media.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Media.h; sourceTree = "<group>"; };
@@ -122,7 +101,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DE4A3DB910FFB0FE00FDA492 /* libSparrow.a in Frameworks */,
 				DE5C4E6E138ED109004892CA /* libz.dylib in Frameworks */,
 				DEAAF3DF16BC114D004EB9D5 /* GLKit.framework in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
@@ -133,6 +111,7 @@
 				DE3F093811B7B9DC009D4DB0 /* AVFoundation.framework in Frameworks */,
 				DE3F093A11B7B9DC009D4DB0 /* AudioToolbox.framework in Frameworks */,
 				DE3F097811B7BABD009D4DB0 /* OpenAL.framework in Frameworks */,
+				C00DF82EC6A249D0930C2D81 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -160,12 +139,13 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				DE4A3DA210FFB0D400FDA492 /* Sparrow.xcodeproj */,
+				D1B562B51762A14E0020B21D /* Podfile */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				6F698761F66D491E8F35EC12 /* Pods.xcconfig */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -203,6 +183,7 @@
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 				288765FC0DF74451002DB57D /* CoreGraphics.framework */,
+				2E6B36523C7C4C9491F73E67 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -234,15 +215,6 @@
 				DE0C710C162417AC00357F6E /* Icon~ipad.png */,
 			);
 			name = system;
-			sourceTree = "<group>";
-		};
-		DE4A3DAB10FFB0DB00FDA492 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				DE4A3DB010FFB0DB00FDA492 /* libSparrow.a */,
-				DE4A3DB210FFB0DB00FDA492 /* UnitTest.octest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		DE4F80D714E153EA00655D44 /* Game */ = {
@@ -305,14 +277,15 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "Swarm" */;
 			buildPhases = (
+				35F7DD95A76D4CDD842E26B3 /* Check Pods Manifest.lock */,
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
 				1D60588F0D05DD3D006BFB54 /* Frameworks */,
+				EB211A74380946629E6A181F /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				DE4A3DB810FFB0F500FDA492 /* PBXTargetDependency */,
 			);
 			name = Swarm;
 			productName = AppScaffold;
@@ -339,35 +312,12 @@
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = DE4A3DAB10FFB0DB00FDA492 /* Products */;
-					ProjectRef = DE4A3DA210FFB0D400FDA492 /* Sparrow.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				1D6058900D05DD3D006BFB54 /* Swarm */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		DE4A3DB010FFB0DB00FDA492 /* libSparrow.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libSparrow.a;
-			remoteRef = DE4A3DAF10FFB0DB00FDA492 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		DE4A3DB210FFB0DB00FDA492 /* UnitTest.octest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = UnitTest.octest;
-			remoteRef = DE4A3DB110FFB0DB00FDA492 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		1D60588D0D05DD3D006BFB54 /* Resources */ = {
@@ -392,10 +342,42 @@
 				DE0C7111162417B800357F6E /* Icon@2x~ipad.png in Resources */,
 				D1EC2F9B173DB04B00548DB9 /* swarmBackground.jpg in Resources */,
 				D1EC2F9E173DB57000548DB9 /* bird.png in Resources */,
+				D1B562B61762A14E0020B21D /* Podfile in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		35F7DD95A76D4CDD842E26B3 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+		};
+		EB211A74380946629E6A181F /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1D60588E0D05DD3D006BFB54 /* Sources */ = {
@@ -414,17 +396,10 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXTargetDependency section */
-		DE4A3DB810FFB0F500FDA492 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = Sparrow;
-			targetProxy = DE4A3DB710FFB0F500FDA492 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
 /* Begin XCBuildConfiguration section */
 		1D6058940D05DD3E006BFB54 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6F698761F66D491E8F35EC12 /* Pods.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = "App-Info.plist";
 				PRODUCT_NAME = Swarm;
@@ -433,6 +408,7 @@
 		};
 		1D6058950D05DD3E006BFB54 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6F698761F66D491E8F35EC12 /* Pods.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = "App-Info.plist";
 				PRODUCT_NAME = Swarm;
