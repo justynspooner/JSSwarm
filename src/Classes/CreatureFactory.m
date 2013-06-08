@@ -66,8 +66,8 @@ typedef void (^ CreatureBlock)(id, int);
     
     for (Creature *creature in self.creatures)
     {
-        CGFloat randomX = [SPUtils randomIntBetweenMin:0 andMax:10] - [SPUtils randomIntBetweenMin:0 andMax:10];
-        CGFloat randomY = [SPUtils randomIntBetweenMin:0 andMax:10] - [SPUtils randomIntBetweenMin:0 andMax:10];
+        CGFloat randomX = [SPUtils randomFloat] - [SPUtils randomFloat];
+        CGFloat randomY = [SPUtils randomFloat] - [SPUtils randomFloat];
         if ([creature.neighbours count]) {
             
             SPPoint * alignmentVector = [self alignmentForCreature:creature];
@@ -80,15 +80,14 @@ typedef void (^ CreatureBlock)(id, int);
             
         }
         else {
-            creature.velocity.x = randomX;
-            creature.velocity.y = randomY;
+            creature.velocity.x += randomX;
+            creature.velocity.y += randomY;
         }
-//        SPPoint * randomDeviation = [[SPPoint pointWithX:randomX y:randomY] normalize];
         if (![creature.velocity isEquivalent:[SPPoint pointWithX:0.0 y:0.0]]) {
             [creature.velocity normalize];
         }
-        creature.x += creature.velocity.x;
-        creature.y += creature.velocity.y;
+        creature.x += creature.velocity.x * _passedTime;
+        creature.y += creature.velocity.y * _passedTime;
         
 //        creature.rotation += _passedTime;
     }
@@ -130,19 +129,24 @@ typedef void (^ CreatureBlock)(id, int);
 }
 
 -(SPPoint *)seperationForCreature:(Creature *)creature {
-    SPPoint * alignmentVector = [SPPoint point];
+    SPPoint * seperationVector = [SPPoint point];
+    NSUInteger totalNeighbours = [creature.neighbours count];
     
     for (Creature * neighbour in creature.neighbours) {
-        alignmentVector.x += (neighbour.x - creature.x);
-        alignmentVector.y += (neighbour.y - creature.y);
+        seperationVector.x += (neighbour.x - creature.x);
+        seperationVector.y += (neighbour.y - creature.y);
     }
-    alignmentVector.x *= -1;
-    alignmentVector.y *= -1;
     
-    if (![alignmentVector isEquivalent:[SPPoint pointWithX:0.0 y:0.0]]) {
-        [alignmentVector normalize];
+    seperationVector.x /= totalNeighbours;
+    seperationVector.y /= totalNeighbours;
+    
+    seperationVector.x *= -1;
+    seperationVector.y *= -1;
+    
+    if (![seperationVector isEquivalent:[SPPoint pointWithX:0.0 y:0.0]]) {
+        [seperationVector normalize];
     }
-    return alignmentVector;
+    return seperationVector;
 }
 
 - (void)updateKnowledge {
@@ -158,14 +162,14 @@ typedef void (^ CreatureBlock)(id, int);
             SPPoint * creaturePoint = [SPPoint pointWithX:creature.x y:creature.y];
             SPPoint * neighbourPoint = [SPPoint pointWithX:neighbour.x y:neighbour.y];
             float distanceToNeighbour = [SPPoint distanceFromPoint:creaturePoint toPoint:neighbourPoint];
-            if (distanceToNeighbour < 30) {
+            if (distanceToNeighbour < 50) {
                 [neightbours addObject:neighbour];
             }
         }
         
         creature.neighbours = [neightbours copy];
         
-        NSLog(@"%@ has %i neighbours", creature.name, [creature.neighbours count]);
+//        NSLog(@"%@ has %i neighbours", creature.name, [creature.neighbours count]);
     }
 }
 
