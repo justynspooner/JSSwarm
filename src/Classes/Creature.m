@@ -13,7 +13,7 @@
 -(id)init {
     self = [Creature imageWithContentsOfFile:@"bird.png"];
     if (self) {
-        _velocity = [SPPoint point];
+        _velocity = [SPPoint pointWithX:[SPUtils randomIntBetweenMin:0 andMax:10] y:[SPUtils randomIntBetweenMin:0 andMax:10]];
     }
     return self;
 }

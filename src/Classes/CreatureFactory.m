@@ -66,31 +66,36 @@ typedef void (^ CreatureBlock)(id, int);
     
     for (Creature *creature in self.creatures)
     {
-        NSNumber * averageSpeed;
+        CGFloat randomX = [SPUtils randomIntBetweenMin:0 andMax:10] - [SPUtils randomIntBetweenMin:0 andMax:10];
+        CGFloat randomY = [SPUtils randomIntBetweenMin:0 andMax:10] - [SPUtils randomIntBetweenMin:0 andMax:10];
         if ([creature.neighbours count]) {
             
             SPPoint * alignmentVector = [self alignmentForCreature:creature];
             SPPoint * cohesionVector = [self cohesionForCreature:creature];
             SPPoint * seperationVector = [self seperationForCreature:creature];
             
-            creature.velocity.x += alignmentVector.x + cohesionVector.x + seperationVector.x;
-            creature.velocity.y += alignmentVector.y + cohesionVector.y + seperationVector.y;
-            [creature.velocity normalize];
             
-            creature.x += creature.velocity.x * 0.01;
-            creature.y += creature.velocity.y * 0.01;
+            creature.velocity.x = alignmentVector.x + cohesionVector.x + seperationVector.x + randomX;
+            creature.velocity.y = alignmentVector.y + cohesionVector.y + seperationVector.y + randomY;
             
         }
         else {
-            creature.y += creature.currentSpeed * _passedTime;
+            creature.velocity.x = randomX;
+            creature.velocity.y = randomY;
         }
+//        SPPoint * randomDeviation = [[SPPoint pointWithX:randomX y:randomY] normalize];
+        if (![creature.velocity isEquivalent:[SPPoint pointWithX:0.0 y:0.0]]) {
+            [creature.velocity normalize];
+        }
+        creature.x += creature.velocity.x;
+        creature.y += creature.velocity.y;
         
 //        creature.rotation += _passedTime;
     }
 }
 
 -(SPPoint *)alignmentForCreature:(Creature *)creature {
-    SPPoint * alignmentVector = [SPPoint pointWithX:creature.x y:creature.y];
+    SPPoint * alignmentVector = [SPPoint point];
     NSUInteger totalNeighbours = [creature.neighbours count];
     
     for (Creature * neighbour in creature.neighbours) {
@@ -99,7 +104,9 @@ typedef void (^ CreatureBlock)(id, int);
     }
     alignmentVector.x /= totalNeighbours;
     alignmentVector.y /= totalNeighbours;
-    [alignmentVector normalize];
+    if (![alignmentVector isEquivalent:[SPPoint pointWithX:0.0 y:0.0]]) {
+        [alignmentVector normalize];
+    }
     return alignmentVector;
 }
 
@@ -115,7 +122,9 @@ typedef void (^ CreatureBlock)(id, int);
     cohesionVector.y /= totalNeighbours;
     
     SPPoint * creatureCohesion = [SPPoint pointWithX:cohesionVector.x - creature.x y:cohesionVector.y - creature.y];
-    [creatureCohesion normalize];
+    if (![creatureCohesion isEquivalent:[SPPoint pointWithX:0.0 y:0.0]]) {
+        [creatureCohesion normalize];
+    }
     
     return creatureCohesion;
 }
@@ -130,7 +139,9 @@ typedef void (^ CreatureBlock)(id, int);
     alignmentVector.x *= -1;
     alignmentVector.y *= -1;
     
-    [alignmentVector normalize];
+    if (![alignmentVector isEquivalent:[SPPoint pointWithX:0.0 y:0.0]]) {
+        [alignmentVector normalize];
+    }
     return alignmentVector;
 }
 
