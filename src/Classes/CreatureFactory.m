@@ -19,6 +19,8 @@ typedef void (^ CreatureBlock)(id, int);
 @property (nonatomic, assign) NSTimeInterval passedTime;
 @property (nonatomic, assign) NSTimeInterval lastKnowledgeUpdate;
 
+@property (nonatomic, strong) SPPoint * gravityPoint;
+
 @end
 
 @implementation CreatureFactory
@@ -27,8 +29,10 @@ typedef void (^ CreatureBlock)(id, int);
     static CreatureFactory *sharedCreatureFactory = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        if (!sharedCreatureFactory)
+        if (!sharedCreatureFactory) {
             sharedCreatureFactory = [self new];
+            sharedCreatureFactory.gravityPoint = [SPPoint pointWithX:500.0 y:500.0];
+        }
     });
     return sharedCreatureFactory;
 }
@@ -68,20 +72,21 @@ typedef void (^ CreatureBlock)(id, int);
     {
         CGFloat randomX = [SPUtils randomFloat] - [SPUtils randomFloat];
         CGFloat randomY = [SPUtils randomFloat] - [SPUtils randomFloat];
+        SPPoint * gravityVector = [self gravityVectorForCreature:creature];
+        
         if ([creature.neighbours count]) {
             
             SPPoint * alignmentVector = [self alignmentForCreature:creature];
             SPPoint * cohesionVector = [self cohesionForCreature:creature];
             SPPoint * seperationVector = [self seperationForCreature:creature];
             
-            
-            creature.velocity.x = alignmentVector.x + cohesionVector.x + seperationVector.x + randomX;
-            creature.velocity.y = alignmentVector.y + cohesionVector.y + seperationVector.y + randomY;
+            creature.velocity.x = alignmentVector.x + cohesionVector.x + seperationVector.x + gravityVector.x + randomX;
+            creature.velocity.y = alignmentVector.y + cohesionVector.y + seperationVector.y + gravityVector.y + randomY;
             
         }
         else {
-            creature.velocity.x += randomX;
-            creature.velocity.y += randomY;
+            creature.velocity.x += gravityVector.x + randomX;
+            creature.velocity.y += gravityVector.y + randomY;
         }
         if (![creature.velocity isEquivalent:[SPPoint pointWithX:0.0 y:0.0]]) {
             [creature.velocity normalize];
@@ -148,6 +153,16 @@ typedef void (^ CreatureBlock)(id, int);
     }
     return seperationVector;
 }
+
+- (SPPoint *)gravityVectorForCreature:(Creature *)creature {
+    // Work out the location to the point and then apply a  scalar based on the distance away from it
+    SPPoint * vectorToGravityPoint = [SPPoint pointWithX:_gravityPoint.x - creature.x y:_gravityPoint.y - creature.y];
+    SPPoint * creaturePosition = [SPPoint pointWithX:creature.x y:creature.y];
+    CGFloat distanceToGravityPoint = [SPPoint distanceFromPoint:creaturePosition toPoint:_gravityPoint];
+    return [[vectorToGravityPoint normalize] scaleBy:distanceToGravityPoint * 0.0001];
+}
+
+
 
 - (void)updateKnowledge {
     for (Creature *creature in self.creatures)
