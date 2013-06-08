@@ -17,7 +17,6 @@
 // Real-time properties
 @property (nonatomic, assign) CGFloat currentSpeed;
 @property (nonatomic, strong) SPPoint * velocity;
-@property (nonatomic, strong) SPPoint * heading;
 
 // Characteristics
 @property (nonatomic, assign) CGFloat maxSpeed;

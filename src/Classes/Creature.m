@@ -10,4 +10,12 @@
 
 @implementation Creature
 
+-(id)init {
+    self = [Creature imageWithContentsOfFile:@"bird.png"];
+    if (self) {
+        _velocity = [SPPoint point];
+    }
+    return self;
+}
+
 @end
